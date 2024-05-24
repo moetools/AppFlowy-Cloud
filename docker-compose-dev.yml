@@ -41,6 +41,7 @@ services:
       - postgres
     environment:
       # Gotrue config: https://github.com/supabase/gotrue/blob/master/example.env
+      - PORT=9999
       - GOTRUE_SITE_URL=appflowy-flutter://                           # redirected to AppFlowy application
       - URI_ALLOW_LIST=*                                              # adjust restrict if necessary
       - GOTRUE_JWT_SECRET=${GOTRUE_JWT_SECRET}                        # authentication secret
@@ -48,7 +49,6 @@ services:
       - GOTRUE_DB_DRIVER=postgres
       - API_EXTERNAL_URL=${API_EXTERNAL_URL}
       - DATABASE_URL=${GOTRUE_DATABASE_URL}
-      - PORT=9999
       - GOTRUE_MAILER_URLPATHS_CONFIRMATION=/verify
       - GOTRUE_SMTP_HOST=${GOTRUE_SMTP_HOST}                              # e.g. smtp.gmail.com
       - GOTRUE_SMTP_PORT=${GOTRUE_SMTP_PORT}                              # e.g. 465

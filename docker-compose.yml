@@ -52,6 +52,7 @@ services:
     environment:
       # There are a lot of options to configure GoTrue. You can reference the example config:
       # https://github.com/supabase/gotrue/blob/master/example.env
+      - PORT=9999
       - GOTRUE_SITE_URL=appflowy-flutter://                           # redirected to AppFlowy application
       - URI_ALLOW_LIST=*                                              # adjust restrict if necessary
       - GOTRUE_JWT_SECRET=${GOTRUE_JWT_SECRET}                        # authentication secret
@@ -59,7 +60,6 @@ services:
       - GOTRUE_DB_DRIVER=postgres
       - API_EXTERNAL_URL=${API_EXTERNAL_URL}
       - DATABASE_URL=${GOTRUE_DATABASE_URL}
-      - PORT=9999
       - GOTRUE_SMTP_HOST=${GOTRUE_SMTP_HOST}                          # e.g. smtp.gmail.com
       - GOTRUE_SMTP_PORT=${GOTRUE_SMTP_PORT}                          # e.g. 465
       - GOTRUE_SMTP_USER=${GOTRUE_SMTP_USER}                          # email sender, e.g. noreply@appflowy.io
@@ -93,8 +93,10 @@ services:
     environment:
       - RUST_LOG=${RUST_LOG:-info}
       - APPFLOWY_ENVIRONMENT=production
+      - APPFLOWY_APPLICATION_PORT=${APPFLOWY_APPLICATION_PORT:-8000}
+      - APPFLOWY_APPLICATION_HOST=${APPFLOWY_APPLICATION_HOST:-0.0.0.0}
       - APPFLOWY_DATABASE_URL=${APPFLOWY_DATABASE_URL}
-      - APPFLOWY_REDIS_URI=redis://redis:6379
+      - APPFLOWY_REDIS_URI=${APPFLOWY_REDIS_URI:-redis://redis:6379}
       - APPFLOWY_GOTRUE_JWT_SECRET=${GOTRUE_JWT_SECRET}
       - APPFLOWY_GOTRUE_JWT_EXP=${GOTRUE_JWT_EXP}
       - APPFLOWY_GOTRUE_BASE_URL=${APPFLOWY_GOTRUE_BASE_URL}
@@ -111,6 +113,7 @@ services:
       - APPFLOWY_DATABASE_MAX_CONNECTIONS=${APPFLOWY_DATABASE_MAX_CONNECTIONS}
       - APPFLOWY_AI_SERVER_HOST=${APPFLOWY_AI_SERVER_HOST}
       - APPFLOWY_AI_SERVER_PORT=${APPFLOWY_AI_SERVER_PORT}
+      - APPFLOWY_GRPC_HISTORY_ADDRS=${APPFLOWY_GRPC_HISTORY_ADDRS:-http://history:50051}
     build:
       context: .
       dockerfile: Dockerfile
@@ -150,9 +153,10 @@ services:
       - "50051:50051"
     environment:
       - RUST_LOG=${RUST_LOG:-info}
-      - APPFLOWY_HISTORY_REDIS_URL=redis://redis:6379
+      - APPFLOWY_HISTORY_REDIS_URL=${APPFLOWY_HISTORY_REDIS_URL:-redis://redis:6379}
       - APPFLOWY_HISTORY_ENVIRONMENT=production
       - APPFLOWY_HISTORY_DATABASE_URL=${APPFLOWY_HISTORY_DATABASE_URL}
+      - APPFLOWY_HISTORY_DATABASE_NAME=${APPFLOWY_HISTORY_DATABASE_NAME:-postgres}
 
 volumes:
   postgres_data:
